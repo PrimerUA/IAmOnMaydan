@@ -50,11 +50,12 @@ public class SocialStreamFragment extends SherlockFragment {
 	}
 
 	private void loadPostsOnScreen() {
-		ArrayList<Post> postsList = PostsList.getInstance().getPostsList();
-		for (int i = 0; i < postsList.size(); i++) {
-			titlesList.add(postsList.get(i).getUserName());
-			messagesList.add(postsList.get(i).getMessage());
-		}
+//		ArrayList<Post> postsList = PostsList.getInstance().getPostsList();
+//		if(postsList != null) {
+//		for (int i = 0; i < postsList.size(); i++) {
+//			titlesList.add(postsList.get(i).getUserName());
+//			messagesList.add(postsList.get(i).getMessage());
+//		}}
 		// подгрузка информации с сервера
 		streamList.setAdapter(new StreamAdapter(getActivity(), new String[] {
 				"title1", "title2", "title3", "title4", "title5", "title6",
@@ -133,14 +134,14 @@ public class SocialStreamFragment extends SherlockFragment {
 	private void checkCoordinates(Location location) {
 		double currentX = location.getLatitude();
 		double currentY = location.getLongitude();
-		if (currentX < Coordinates.TOP_LEFT_X
-				&& currentX > Coordinates.BOTTOM_RIGHT_X
-				&& currentY < Coordinates.BOTTOM_RIGHT_Y
-				&& currentY > Coordinates.TOP_LEFT_Y) {
+//		if (currentX < Coordinates.TOP_LEFT_X
+//				&& currentX > Coordinates.BOTTOM_RIGHT_X
+//				&& currentY < Coordinates.BOTTOM_RIGHT_Y
+//				&& currentY > Coordinates.TOP_LEFT_Y) {
 			((MainHolderActivity) getActivity()).showFragment(1, true);
-		} else {
-			Toast.makeText(getActivity(), getString(R.string.sorry_message),
-					Toast.LENGTH_SHORT).show();
-		}
+//		} else {
+//			Toast.makeText(getActivity(), getString(R.string.sorry_message),
+//					Toast.LENGTH_SHORT).show();
+//		}
 	}
 }

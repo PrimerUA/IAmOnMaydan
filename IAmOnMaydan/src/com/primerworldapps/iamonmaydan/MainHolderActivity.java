@@ -167,10 +167,11 @@ public class MainHolderActivity extends SherlockFragmentActivity implements
 
 	@Override
 	public void onBackPressed() {
-		Intent backtoHome = new Intent(Intent.ACTION_MAIN);
-		backtoHome.addCategory(Intent.CATEGORY_HOME);
-		backtoHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		startActivity(backtoHome);
+		if(currentFragment == 0) {
+			finish();
+		} else {
+			showFragment(0, false);
+		}
 	}
 
 }
