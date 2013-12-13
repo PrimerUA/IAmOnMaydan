@@ -1,0 +1,176 @@
+package com.primerworldapps.iamonmaydan;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
+import android.support.v4.app.FragmentTransaction;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.plus.PlusClient;
+import com.google.android.gms.plus.PlusClient.OnAccessRevokedListener;
+import com.primerworldapps.iamonmaydan.entity.User;
+import com.primerworldapps.iamonmaydan.fragments.LocationFragment;
+import com.primerworldapps.iamonmaydan.fragments.ShareFragment;
+import com.primerworldapps.iamonmaydan.utils.PreferencesController;
+
+public class MainHolderActivity extends SherlockFragmentActivity implements ConnectionCallbacks,
+		GooglePlayServicesClient.OnConnectionFailedListener {
+
+	private final int STEPS = 2;
+	private Fragment[] fragments = new Fragment[STEPS];
+
+	private PlusClient plusClient;
+	private int currentFragment;
+	
+	private AdView adView;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main_holder_activity);
+
+		PreferencesController.getInstance().init(this);
+		if (!User.getInstance().isLoggedIn()) {
+			startActivity(new Intent(this, LoginActivity.class));
+		}
+		
+	    adView = new AdView(this, AdSize.BANNER, getString(R.string.admob_key));
+
+	    LinearLayout layout = (LinearLayout)findViewById(R.id.mainLayout);
+	    layout.addView(adView);
+	    adView.loadAd(new AdRequest());
+
+		FragmentManager fm = getSupportFragmentManager();
+		LocationFragment startFragment = (LocationFragment) fm.findFragmentById(R.id.locationFragment);
+		fragments[0] = startFragment;
+		fragments[1] = (ShareFragment) fm.findFragmentById(R.id.shareFragment);
+
+		FragmentTransaction transaction = fm.beginTransaction();
+		for (int i = 0; i < fragments.length; i++) {
+			transaction.hide(fragments[i]);
+		}
+		transaction.commit();
+		showFragment(currentFragment = 0, true);
+
+		fm.addOnBackStackChangedListener(new OnBackStackChangedListener() {
+
+			@Override
+			public void onBackStackChanged() {
+				if (getSupportFragmentManager().getBackStackEntryCount() == 0)
+					finish();
+			}
+		});
+	}
+
+	public void showFragment(int fragmentIndex, boolean addToBackStack) {
+		FragmentManager fm = getSupportFragmentManager();
+		FragmentTransaction transaction = fm.beginTransaction();
+		for (int i = 0; i < fragments.length; i++) {
+			if (i == fragmentIndex) {
+				transaction.show(fragments[i]);
+			} else {
+				transaction.hide(fragments[i]);
+			}
+		}
+
+		if (addToBackStack) {
+			transaction.addToBackStack(null);
+		}
+		if (fragmentIndex == 0) {
+			getSupportActionBar().setTitle(getString(R.string.app_name));
+		} else if (fragmentIndex == 1) {
+			getSupportActionBar().setTitle(getString(R.string.welcome_maydan));
+		}
+		currentFragment = fragmentIndex;
+		transaction.commit();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_light: {
+			startActivity(new Intent(MainHolderActivity.this, LightActivity.class));
+			break;
+		}
+		case R.id.action_hymn: {
+			startActivity(new Intent(MainHolderActivity.this, HymnActivity.class));
+			break;
+		}
+		case R.id.action_logout: {
+			logout();
+			break;
+		}
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	private void logout() {
+		plusClient = new PlusClient.Builder(this, this, this).setVisibleActivities(
+				"http://schemas.google.com/AddActivity", "http://schemas.google.com/BuyActivity").build();
+		plusClient.connect();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		Toast.makeText(this, " Error code: " + result.getErrorCode(), Toast.LENGTH_SHORT).show();
+
+	}
+
+	@Override
+	public void onConnected(Bundle arg0) {
+		plusClient.clearDefaultAccount();
+		plusClient.revokeAccessAndDisconnect(new OnAccessRevokedListener() {
+			@Override
+			public void onAccessRevoked(ConnectionResult status) {
+
+			}
+		});
+		plusClient.disconnect();
+		PreferencesController.getInstance().clear();
+		startActivity(new Intent(MainHolderActivity.this, LoginActivity.class));
+	}
+
+	@Override
+	public void onDisconnected() {
+		Toast.makeText(this, getString(R.string.google_disconnected), Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getSupportActionBar().setTitle(R.string.app_name);
+	}
+
+	@Override
+	public void onBackPressed() {
+		Intent backtoHome = new Intent(Intent.ACTION_MAIN);
+		backtoHome.addCategory(Intent.CATEGORY_HOME);
+		backtoHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(backtoHome);
+	}
+	
+	@Override
+	  public void onDestroy() {
+	    adView.destroy();
+	    super.onDestroy();
+	  }
+
+}

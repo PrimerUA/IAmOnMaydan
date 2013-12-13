@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Я на Майданi!</string>
+    <string name="admob_key">a152aa4b6d29c35</string>
+    <string name="app_url">https://play.google.com/store/apps/details?id=com.primerworldapps.iamonmaydan</string>
+    <string name="app_short_url_text">Офiцiйний Android додаток - http://goo.gl/H4jX66</string>
+    <string name="app_short_url">http://goo.gl/H4jX66</string>
+    <string name="my_apps_url">https://play.google.com/store/apps/developer?id=Michael+Skrychevsky</string>
+    <string name="action_light">Лiхтарик</string>
+    <string name="action_logout">Вихiд</string>
+    <string name="action_hymn">Гімн</string>
+    <string name="google_connected">Вхiд виконано</string>
+    <string name="google_disconnected">Вихiд виконано</string>
+    <string name="sorry_message">Вибачте, але Ви не на Майданi:-( Спробуйте пiдiйти ближче</string>
+    <string name="fill_message">Заповнiть поле!</string>
+    <string name="message_hint">Зараз на Майданi...</string>
+    <string name="share_via">Розповiсти за допомогою:</string>
+    <string name="onmaydan_text">Що зараз вiдбувається на Майданi?</string>
+    <string name="tell_text">Натиcніть кнопку та розкажіть усім!\nПриєднуйте зображення та геолокаційні дані</string>
+    <string name="light_on">Вимкнути ліхтарик</string>
+    <string name="light_off">Увімкнути ліхтарик</string>
+    <string name="light_text">Використовуйте коли співаєте Державний Гімн або для підсвітки</string>
+    <string name="hymn_title">Гімн України</string>
+    <string name="hymn_lyrics">Ще не вмерла України і слава, і воля,\n
+Ще нам, браття молодії, усміхнеться доля.\n
+Згинуть наші воріженьки, як роса на сонці.\n
+Запануєм і ми, браття, у своїй сторонці.\n\n
+Душу й тіло ми положим за нашу свободу,\n
+І покажем, що ми, браття, козацького роду.\n\n
+Станем, браття, в бій кривавий, від Сяну до Дону,\n
+В ріднім краю панувати не дамо нікому,\n
+Чорне море ще всміхнеться, дід-Дніпро зрадіє,\n
+Ще у нашій Україні — доленька наспіє.\n\n
+Душу, тіло ми положим за нашу свободу,\n
+І покажем, що ми, браття, козацького роду.\n\n
+А завзяття, праця щира свого ще докаже,\n
+Ще ся волі в Україні піснь гучна розляже,\n
+За Карпати відіб\'ється, згомонить степами,\n
+України слава стане поміж ворогами.\n\n
+Душу й тіло ми положим за нашу свободу\n
+І покажем, що ми, браття, козацького роду.\n</string>
+    <string name="rate">Оцінити</string>
+    <string name="more">Більше</string>
+    <string name="welcome_maydan">Вітаємо на Майдані!</string>
+    <string name="location_text">Натисніть кнопку, щоб перевірити Ваше місцезнаходження</string>
+    <string name="play">Грати</string>
+    <string name="pause">Пауза</string>
+    <string name="stop">Зупинити</string>
+    <string name="resume">Продовжити</string>
+
+</resources>
