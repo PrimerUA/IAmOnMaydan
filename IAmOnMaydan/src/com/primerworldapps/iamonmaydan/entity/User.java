@@ -7,12 +7,16 @@ public class User {
 	private int id;
 	private String name;
 	private String email;
+	private String token;
 
 	public static User getInstance() {
 		if (instance == null) {
 			instance = new User();
 		}
 		return instance;
+	}
+	
+	public User() {
 	}
 
 	public int getId() {
@@ -45,6 +49,14 @@ public class User {
 
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }

@@ -8,13 +8,13 @@
 
     <fragment
         android:id="@+id/locationFragment"
-        android:name="com.primerworldapps.iamonmaydan.fragments.LocationFragment"
+        android:name="com.primerworldapps.iamonmaydan.fragments.SocialStreamFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <fragment
         android:id="@+id/shareFragment"
-        android:name="com.primerworldapps.iamonmaydan.fragments.ShareFragment"
+        android:name="com.primerworldapps.iamonmaydan.fragments.NewMessageFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

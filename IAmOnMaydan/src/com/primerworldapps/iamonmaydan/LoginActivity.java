@@ -38,6 +38,7 @@ public class LoginActivity extends SherlockActivity implements GooglePlayService
 	}
 
 	private void screenInit() {
+		getSupportActionBar().setTitle(R.string.login);
 		loginButton = (SignInButton) findViewById(R.id.googleSignInButton);
 		loginButton.setOnClickListener(new View.OnClickListener() {
 			@Override

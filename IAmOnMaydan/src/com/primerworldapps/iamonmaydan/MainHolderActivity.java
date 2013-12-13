@@ -6,23 +6,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.PlusClient.OnAccessRevokedListener;
 import com.primerworldapps.iamonmaydan.entity.User;
-import com.primerworldapps.iamonmaydan.fragments.LocationFragment;
-import com.primerworldapps.iamonmaydan.fragments.ShareFragment;
+import com.primerworldapps.iamonmaydan.fragments.SocialStreamFragment;
+import com.primerworldapps.iamonmaydan.fragments.NewMessageFragment;
 import com.primerworldapps.iamonmaydan.utils.PreferencesController;
 
 public class MainHolderActivity extends SherlockFragmentActivity implements
@@ -46,10 +42,10 @@ public class MainHolderActivity extends SherlockFragmentActivity implements
 		}
 
 		FragmentManager fm = getSupportFragmentManager();
-		LocationFragment startFragment = (LocationFragment) fm
+		SocialStreamFragment startFragment = (SocialStreamFragment) fm
 				.findFragmentById(R.id.locationFragment);
 		fragments[0] = startFragment;
-		fragments[1] = (ShareFragment) fm.findFragmentById(R.id.shareFragment);
+		fragments[1] = (NewMessageFragment) fm.findFragmentById(R.id.shareFragment);
 
 		FragmentTransaction transaction = fm.beginTransaction();
 		for (int i = 0; i < fragments.length; i++) {
@@ -119,6 +115,7 @@ public class MainHolderActivity extends SherlockFragmentActivity implements
 				.setVisibleActivities("http://schemas.google.com/AddActivity",
 						"http://schemas.google.com/BuyActivity").build();
 		plusClient.connect();
+		PreferencesController.getInstance().clear();
 	}
 
 	@Override
@@ -127,9 +124,11 @@ public class MainHolderActivity extends SherlockFragmentActivity implements
 		if (currentFragment == 0) {
 			menu.findItem(R.id.action_hymn).setVisible(false);
 			menu.findItem(R.id.action_light).setVisible(false);
+			menu.findItem(R.id.action_refresh).setVisible(true);
 		} else {
 			menu.findItem(R.id.action_hymn).setVisible(true);
 			menu.findItem(R.id.action_light).setVisible(true);
+			menu.findItem(R.id.action_refresh).setVisible(false);
 		}
 		return true;
 	}
@@ -151,7 +150,6 @@ public class MainHolderActivity extends SherlockFragmentActivity implements
 			}
 		});
 		plusClient.disconnect();
-		PreferencesController.getInstance().clear();
 		startActivity(new Intent(MainHolderActivity.this, LoginActivity.class));
 	}
 

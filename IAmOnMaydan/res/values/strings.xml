@@ -10,6 +10,8 @@
     <string name="action_light">Лiхтарик</string>
     <string name="action_logout">Вихiд</string>
     <string name="action_hymn">Гімн</string>
+    <string name="action_refresh">Оновити</string>
+    <string name="login">Ласкаво просимо!</string>
     <string name="google_connected">Вхiд виконано</string>
     <string name="google_disconnected">Вихiд виконано</string>
     <string name="sorry_message">Вибачте, але Ви не на Майданi:-( Спробуйте пiдiйти ближче</string>
