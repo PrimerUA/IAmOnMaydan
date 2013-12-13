@@ -52,19 +52,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
-        <ImageButton
+        <ImageView
             android:id="@+id/checkinButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:adjustViewBounds="false"
+            android:adjustViewBounds="true"
             android:baselineAlignBottom="false"
             android:cropToPadding="false"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_huge" />
+            android:src="@drawable/fancy_maydan_button" />
 
     </RelativeLayout>
-    
-    
 
 </LinearLayout>

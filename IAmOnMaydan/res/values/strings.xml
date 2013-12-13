@@ -16,10 +16,10 @@
     <string name="fill_message">Заповнiть поле!</string>
     <string name="message_hint">Зараз на Майданi...</string>
     <string name="share_via">Розповiсти за допомогою:</string>
-    <string name="onmaydan_text">Що зараз вiдбувається на Майданi?</string>
-    <string name="tell_text">Натиcніть кнопку та розкажіть усім!\nПриєднуйте зображення та геолокаційні дані</string>
-    <string name="light_on">Вимкнути ліхтарик</string>
-    <string name="light_off">Увімкнути ліхтарик</string>
+    <string name="onmaydan_text">Вітаємо на Майдані!\nЩо зараз тут вiдбувається?</string>
+    <string name="tell_text">Натиcніть на кнопку та розкажіть усім! Приєднуйте зображення та геолокаційні дані</string>
+    <string name="light_on">Ліхтарик увімкнено</string>
+    <string name="light_off">Ліхтарик вимкнено</string>
     <string name="light_text">Використовуйте коли співаєте Державний Гімн або для підсвітки</string>
     <string name="hymn_title">Гімн України</string>
     <string name="hymn_lyrics">Ще не вмерла України і слава, і воля,\n

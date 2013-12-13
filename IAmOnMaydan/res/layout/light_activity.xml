@@ -17,20 +17,11 @@
         android:typeface="serif" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/lightsToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="false"
         android:scaleType="center"
-        android:src="@drawable/ic_launcher_huge" />
-
-    <ToggleButton
-        android:id="@+id/lightsToggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ToggleButton"
-        android:textColor="@android:color/white"
-        android:textOff="@string/light_off"
-        android:textOn="@string/light_on" />
+        android:src="@drawable/fancy_maydan_button" />
 
 </LinearLayout>

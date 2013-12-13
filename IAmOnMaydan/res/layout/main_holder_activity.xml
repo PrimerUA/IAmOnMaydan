@@ -6,24 +6,16 @@
     android:background="@drawable/background"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.primerworldapps.iamonmaydan.fragments.LocationFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background"
-        android:layout_weight="1"
-        android:orientation="vertical" >
+        android:layout_height="match_parent" />
 
-        <fragment
-            android:id="@+id/locationFragment"
-            android:name="com.primerworldapps.iamonmaydan.fragments.LocationFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <fragment
-            android:id="@+id/shareFragment"
-            android:name="com.primerworldapps.iamonmaydan.fragments.ShareFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+    <fragment
+        android:id="@+id/shareFragment"
+        android:name="com.primerworldapps.iamonmaydan.fragments.ShareFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="false"
         android:scaleType="center"
-        android:src="@drawable/ic_launcher_huge" />
+        android:src="@drawable/maydan_button" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googleSignInButton"

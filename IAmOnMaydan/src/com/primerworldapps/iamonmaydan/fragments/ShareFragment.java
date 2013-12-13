@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -15,7 +15,7 @@ import com.primerworldapps.iamonmaydan.R;
 
 public class ShareFragment extends SherlockFragment {
 
-	private ImageButton checkinButton;
+	private ImageView checkinButton;
 	private EditText messageEdit;
 
 	private View view;
@@ -28,7 +28,7 @@ public class ShareFragment extends SherlockFragment {
 	}
 
 	private void initFragment() {
-		checkinButton = (ImageButton) view.findViewById(R.id.checkinButton);
+		checkinButton = (ImageView) view.findViewById(R.id.checkinButton);
 		messageEdit = (EditText) view.findViewById(R.id.messageText);
 
 		checkinButton.setOnClickListener(new OnClickListener() {

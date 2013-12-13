@@ -23,17 +23,15 @@
         android:textColor="@android:color/white"
         android:typeface="serif" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/locationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:adjustViewBounds="false"
+        android:adjustViewBounds="true"
         android:baselineAlignBottom="false"
         android:cropToPadding="false"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_huge" />
-    
-    
+        android:src="@drawable/fancy_maydan_button" />
 
 </LinearLayout>

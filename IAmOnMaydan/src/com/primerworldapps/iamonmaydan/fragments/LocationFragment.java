@@ -1,6 +1,5 @@
 package com.primerworldapps.iamonmaydan.fragments;
 
-import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
@@ -10,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -20,7 +19,7 @@ import com.primerworldapps.iamonmaydan.utils.Coordinates;
 
 public class LocationFragment extends SherlockFragment {
 
-	private ImageButton locationButton;
+	private ImageView locationButton;
 
 	private static final long LOCATION_REFRESH_TIME = 0;
 	private static final float LOCATION_REFRESH_DISTANCE = 0;
@@ -37,7 +36,7 @@ public class LocationFragment extends SherlockFragment {
 	}
 
 	private void initFragment() {
-		locationButton = (ImageButton) view.findViewById(R.id.locationButton);
+		locationButton = (ImageView) view.findViewById(R.id.locationButton);
 		locationButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -90,12 +89,12 @@ public class LocationFragment extends SherlockFragment {
 	private void checkCoordinates(Location location) {
 		double currentX = location.getLatitude();
 		double currentY = location.getLongitude();
-//		if (currentX < Coordinates.TOP_LEFT_X && currentX > Coordinates.BOTTOM_RIGHT_X
-//				&& currentY < Coordinates.BOTTOM_RIGHT_Y && currentY > Coordinates.TOP_LEFT_Y) {
+		if (currentX < Coordinates.TOP_LEFT_X && currentX > Coordinates.BOTTOM_RIGHT_X
+				&& currentY < Coordinates.BOTTOM_RIGHT_Y && currentY > Coordinates.TOP_LEFT_Y) {
 			getSherlockActivity().invalidateOptionsMenu();
 			((MainHolderActivity) getActivity()).showFragment(1, true);
-//		} else {
-//			Toast.makeText(getActivity(), getString(R.string.sorry_message), Toast.LENGTH_SHORT).show();
-//		}
+		} else {
+			Toast.makeText(getActivity(), getString(R.string.sorry_message), Toast.LENGTH_SHORT).show();
+		}
 	}
 }

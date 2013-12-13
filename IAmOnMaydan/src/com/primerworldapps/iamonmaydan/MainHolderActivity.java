@@ -25,7 +25,8 @@ import com.primerworldapps.iamonmaydan.fragments.LocationFragment;
 import com.primerworldapps.iamonmaydan.fragments.ShareFragment;
 import com.primerworldapps.iamonmaydan.utils.PreferencesController;
 
-public class MainHolderActivity extends SherlockFragmentActivity implements ConnectionCallbacks,
+public class MainHolderActivity extends SherlockFragmentActivity implements
+		ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener {
 
 	private final int STEPS = 2;
@@ -33,8 +34,6 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 
 	private PlusClient plusClient;
 	private int currentFragment;
-	
-	private AdView adView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,15 +44,10 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 		if (!User.getInstance().isLoggedIn()) {
 			startActivity(new Intent(this, LoginActivity.class));
 		}
-		
-	    adView = new AdView(this, AdSize.BANNER, getString(R.string.admob_key));
-
-	    LinearLayout layout = (LinearLayout)findViewById(R.id.mainLayout);
-	    layout.addView(adView);
-	    adView.loadAd(new AdRequest());
 
 		FragmentManager fm = getSupportFragmentManager();
-		LocationFragment startFragment = (LocationFragment) fm.findFragmentById(R.id.locationFragment);
+		LocationFragment startFragment = (LocationFragment) fm
+				.findFragmentById(R.id.locationFragment);
 		fragments[0] = startFragment;
 		fragments[1] = (ShareFragment) fm.findFragmentById(R.id.shareFragment);
 
@@ -62,6 +56,7 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 			transaction.hide(fragments[i]);
 		}
 		transaction.commit();
+		getSupportActionBar().setTitle(getString(R.string.app_name));
 		showFragment(currentFragment = 0, true);
 
 		fm.addOnBackStackChangedListener(new OnBackStackChangedListener() {
@@ -88,12 +83,13 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 		if (addToBackStack) {
 			transaction.addToBackStack(null);
 		}
-		if (fragmentIndex == 0) {
-			getSupportActionBar().setTitle(getString(R.string.app_name));
-		} else if (fragmentIndex == 1) {
-			getSupportActionBar().setTitle(getString(R.string.welcome_maydan));
-		}
+		// if (fragmentIndex == 0) {
+		// getSupportActionBar().setTitle(getString(R.string.app_name));
+		// } else if (fragmentIndex == 1) {
+		// getSupportActionBar().setTitle(getString(R.string.welcome_maydan));
+		// }
 		currentFragment = fragmentIndex;
+		supportInvalidateOptionsMenu();
 		transaction.commit();
 	}
 
@@ -101,11 +97,13 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_light: {
-			startActivity(new Intent(MainHolderActivity.this, LightActivity.class));
+			startActivity(new Intent(MainHolderActivity.this,
+					LightActivity.class));
 			break;
 		}
 		case R.id.action_hymn: {
-			startActivity(new Intent(MainHolderActivity.this, HymnActivity.class));
+			startActivity(new Intent(MainHolderActivity.this,
+					HymnActivity.class));
 			break;
 		}
 		case R.id.action_logout: {
@@ -117,20 +115,29 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 	}
 
 	private void logout() {
-		plusClient = new PlusClient.Builder(this, this, this).setVisibleActivities(
-				"http://schemas.google.com/AddActivity", "http://schemas.google.com/BuyActivity").build();
+		plusClient = new PlusClient.Builder(this, this, this)
+				.setVisibleActivities("http://schemas.google.com/AddActivity",
+						"http://schemas.google.com/BuyActivity").build();
 		plusClient.connect();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.main, menu);
+		if (currentFragment == 0) {
+			menu.findItem(R.id.action_hymn).setVisible(false);
+			menu.findItem(R.id.action_light).setVisible(false);
+		} else {
+			menu.findItem(R.id.action_hymn).setVisible(true);
+			menu.findItem(R.id.action_light).setVisible(true);
+		}
 		return true;
 	}
 
 	@Override
 	public void onConnectionFailed(ConnectionResult result) {
-		Toast.makeText(this, " Error code: " + result.getErrorCode(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, " Error code: " + result.getErrorCode(),
+				Toast.LENGTH_SHORT).show();
 
 	}
 
@@ -150,7 +157,8 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 
 	@Override
 	public void onDisconnected() {
-		Toast.makeText(this, getString(R.string.google_disconnected), Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, getString(R.string.google_disconnected),
+				Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -166,11 +174,5 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 		backtoHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(backtoHome);
 	}
-	
-	@Override
-	  public void onDestroy() {
-	    adView.destroy();
-	    super.onDestroy();
-	  }
 
 }

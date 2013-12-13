@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
-import android.widget.ToggleButton;
+import android.widget.ImageView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -17,7 +17,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class LightActivity extends SherlockActivity {
 
-	private ToggleButton lightsButton;
+	private ImageView lightsButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,22 +31,27 @@ public class LightActivity extends SherlockActivity {
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		lightsButton = (ToggleButton) findViewById(R.id.lightsToggle);
+		lightsButton = (ImageView) findViewById(R.id.lightsToggle);
 		if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
 			try {
 				lightsButton.setOnClickListener(new OnClickListener() {
+					boolean state = false;
 					Camera cam;
 					@Override
 					public void onClick(View v) {
-						if (lightsButton.isChecked()) {
+						if (!state) {
 							cam = Camera.open();
 							Parameters p = cam.getParameters();
 							p.setFlashMode(Parameters.FLASH_MODE_TORCH);
 							cam.setParameters(p);
 							cam.startPreview();
+							state = true;
+							Toast.makeText(getBaseContext(), getString(R.string.light_on), Toast.LENGTH_SHORT).show();
 						} else {
 							cam.stopPreview();
 							cam.release();
+							state = false;
+							Toast.makeText(getBaseContext(), getString(R.string.light_off), Toast.LENGTH_SHORT).show();
 						}
 					}
 				});
