@@ -9,6 +9,7 @@ public class PreferencesController {
 
 	private final static String PREFS_NAME = "IAmOnMaydanPreferences";
 	private final String USER_ID = "user_id";
+	private final String USER_TOKEN = "user_token";
 	private final String USER_STATE = "user_state";
 	private final String USER_EMAIL = "user_email";
 	private final String USER_NAME = "user_name";
@@ -36,6 +37,7 @@ public class PreferencesController {
 	public void saveUserInfo() {
 		SharedPreferences.Editor editor = preference.edit();
 		editor.putInt(USER_ID, user.getId());
+		editor.putString(USER_TOKEN, user.getToken());
 		editor.putBoolean(USER_STATE, user.isLoggedIn());
 		editor.putString(USER_EMAIL, user.getEmail());
 		editor.putString(USER_NAME, user.getName());
@@ -44,6 +46,7 @@ public class PreferencesController {
 
 	public void loadUserInfo() {
 		user.setId(preference.getInt(USER_ID, 0));
+		user.setToken(preference.getString(USER_TOKEN, "error"));
 		user.setLoggedIn(preference.getBoolean(USER_STATE, false));
 		user.setEmail(preference.getString(USER_EMAIL, "error"));
 		user.setName(preference.getString(USER_NAME, "error"));
