@@ -35,8 +35,7 @@ public class OperationExecutor {
 	public void register(String name, String email) {
 		try {
 			HttpPost httpPost = new HttpPost(registerUrl);
-			StringEntity buff = new StringEntity(new Gson().toJson(
-					new UserRegistration(name, email)).toString(), HTTP.UTF_8);
+			StringEntity buff = new StringEntity(new Gson().toJson(new UserRegistration(name, email)).toString(), HTTP.UTF_8);
 			httpPost.setHeader("Accept", "application/json");
 			httpPost.setHeader("Content-type", "application/json");
 			httpPost.setEntity(buff);
@@ -53,8 +52,7 @@ public class OperationExecutor {
 	public String createPost(NewPost newPost) {
 		try {
 			HttpPost httpPost = new HttpPost(createPostUrl);
-			StringEntity buff = new StringEntity(new Gson().toJson(newPost)
-					.toString(), HTTP.UTF_8);
+			StringEntity buff = new StringEntity(new Gson().toJson(newPost).toString(), HTTP.UTF_8);
 			httpPost.setHeader("Accept", "application/json");
 			httpPost.setHeader("Content-type", "application/json");
 			httpPost.setEntity(buff);
@@ -98,8 +96,7 @@ public class OperationExecutor {
 		return in;
 	}
 
-	private void fillUserDetails(String name, String email,
-			HttpResponse response) throws IllegalStateException, IOException {
+	private void fillUserDetails(String name, String email, HttpResponse response) throws IllegalStateException, IOException {
 
 		InputStream in = response.getEntity().getContent();
 		JsonReader reader = new JsonReader(new InputStreamReader(in));
@@ -120,7 +117,7 @@ public class OperationExecutor {
 		reader.endObject();
 		reader.close();
 		User.getInstance().setName(name).setEmail(email);
-		
+
 	}
 
 	private String getPostUrl(HttpResponse response) throws IOException {
@@ -145,8 +142,7 @@ public class OperationExecutor {
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<Post> parseStreamListPost(InputStream stream)
-			throws IOException {
+	private List<Post> parseStreamListPost(InputStream stream) throws IOException {
 		List<Post> result = null;
 		Reader reader = new InputStreamReader(stream);
 
@@ -179,10 +175,9 @@ public class OperationExecutor {
 		private double lat;
 		private double longit;
 
-		public NewPost(int userId, String token, String message,
-				double latititude, double longitude) {
-			this.user = userId;
-			this.token = token;
+		public NewPost(String message, double latititude, double longitude) {
+			this.user = User.getInstance().getId();
+			this.token = User.getInstance().getToken();
 			this.text = message;
 			this.lat = 50.4500;
 			this.longit = 30.500;

@@ -1,6 +1,6 @@
 package com.primerworldapps.iamonmaydan.fragments;
 
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.primerworldapps.iamonmaydan.R;
+import com.primerworldapps.iamonmaydan.executors.OperationExecutor;
+import com.primerworldapps.iamonmaydan.utils.StreamAdapter;
 
 public class NewMessageFragment extends SherlockFragment {
 
@@ -45,11 +47,25 @@ public class NewMessageFragment extends SherlockFragment {
 	}
 
 	private void startSharing() {
-		String shareBody = getString(R.string.app_name) + " Повідомляю: ''" + messageEdit.getText().toString() + "'' " + getString(R.string.app_short_url_text);
-		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-		sharingIntent.setType("text/plain");
-		sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
-		startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
+		final ProgressDialog myProgressDialog = ProgressDialog.show(getActivity(), getString(R.string.connection),
+				getString(R.string.connection_wait), true);
+		new Thread() {
+			public void run() {
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						new OperationExecutor().createPost(new OperationExecutor().new NewPost(messageEdit.getText().toString(), 50.1234, 30.4567));
+					}
+				});
+				myProgressDialog.dismiss();
+			}
+		}.start();
+
+//		String shareBody = getString(R.string.app_name) + " Повідомляю: ''" + messageEdit.getText().toString() + "'' " + getString(R.string.app_short_url_text);
+//		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+//		sharingIntent.setType("text/plain");
+//		sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+//		startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
 	}
 
 

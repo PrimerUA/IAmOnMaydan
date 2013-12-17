@@ -50,5 +50,7 @@
     <string name="pause">Пауза</string>
     <string name="stop">Зупинити</string>
     <string name="resume">Продовжити</string>
+    <string name="connection">Відбувається підключення</string>
+    <string name="connection_wait">Будь-ласка, зачекайте</string>
 
 </resources>

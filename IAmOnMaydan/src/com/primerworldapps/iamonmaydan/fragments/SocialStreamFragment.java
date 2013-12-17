@@ -3,6 +3,7 @@ package com.primerworldapps.iamonmaydan.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
@@ -17,10 +18,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.MenuItem;
+import com.primerworldapps.iamonmaydan.HymnActivity;
+import com.primerworldapps.iamonmaydan.LightActivity;
 import com.primerworldapps.iamonmaydan.MainHolderActivity;
 import com.primerworldapps.iamonmaydan.R;
 import com.primerworldapps.iamonmaydan.entity.Post;
 import com.primerworldapps.iamonmaydan.entity.list.PostsList;
+import com.primerworldapps.iamonmaydan.executors.OperationExecutor;
 import com.primerworldapps.iamonmaydan.utils.Coordinates;
 import com.primerworldapps.iamonmaydan.utils.StreamAdapter;
 
@@ -35,9 +40,7 @@ public class SocialStreamFragment extends SherlockFragment {
 
 	private View view;
 	private ListView streamList;
-
-	private ArrayList<String> titlesList;
-	private ArrayList<String> messagesList;
+	private List<Post> posts;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,27 +53,23 @@ public class SocialStreamFragment extends SherlockFragment {
 	}
 
 	private void loadPostsOnScreen() {
-//		ArrayList<Post> postsList = PostsList.getInstance().getPostsList();
-//		if(postsList != null) {
-//		for (int i = 0; i < postsList.size(); i++) {
-//			titlesList.add(postsList.get(i).getUserName());
-//			messagesList.add(postsList.get(i).getMessage());
-//		}}
-		// подгрузка информации с сервера
-		streamList.setAdapter(new StreamAdapter(getActivity(), new String[] {
-				"title1", "title2", "title3", "title4", "title5", "title6",
-				"title7", "title8", "title9", "title10", "title11", "title12",
-				"title13", "title14", "title15", "title16", "title17",
-				"title18" },
-				new String[] { "message1", "message2", "message3", "message4",
-						"message5", "message6", "message7", "message8",
-						"message9", "message10", "message11", "message12",
-						"message13", "message14", "message15", "message16",
-						"message17", "message18" }));
+		final ProgressDialog myProgressDialog = ProgressDialog.show(getActivity(), getString(R.string.connection),
+				getString(R.string.connection_wait), true);
+		new Thread() {
+			public void run() {
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						posts = new OperationExecutor().getPostList(0, 10);
+						((StreamAdapter) streamList.getAdapter()).notifyDataSetChanged(); 
+					}
+				});
+				myProgressDialog.dismiss();
+			}
+		}.start();
 	}
 
 	private void initFragment() {
-
 		locationButton = (ImageView) view.findViewById(R.id.locationButton);
 		locationButton.setOnClickListener(new OnClickListener() {
 
@@ -81,6 +80,8 @@ public class SocialStreamFragment extends SherlockFragment {
 		});
 
 		streamList = (ListView) view.findViewById(R.id.socialList);
+		
+		streamList.setAdapter(new StreamAdapter(getActivity(), posts));
 	}
 
 	protected void updateLocation() {
@@ -144,4 +145,16 @@ public class SocialStreamFragment extends SherlockFragment {
 //					Toast.LENGTH_SHORT).show();
 //		}
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_refresh: {
+			loadPostsOnScreen();
+			break;
+		}
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
 }

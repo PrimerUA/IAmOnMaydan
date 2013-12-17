@@ -17,15 +17,11 @@ import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallback
 import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.PlusClient.OnAccessRevokedListener;
 import com.primerworldapps.iamonmaydan.entity.User;
-import com.primerworldapps.iamonmaydan.executors.OperationExecutor;
-import com.primerworldapps.iamonmaydan.executors.OperationExecutor.NewPost;
 import com.primerworldapps.iamonmaydan.fragments.SocialStreamFragment;
 import com.primerworldapps.iamonmaydan.fragments.NewMessageFragment;
 import com.primerworldapps.iamonmaydan.utils.PreferencesController;
 
-public class MainHolderActivity extends SherlockFragmentActivity implements
-		ConnectionCallbacks,
-		GooglePlayServicesClient.OnConnectionFailedListener {
+public class MainHolderActivity extends SherlockFragmentActivity implements ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
 
 	private final int STEPS = 2;
 	private Fragment[] fragments = new Fragment[STEPS];
@@ -38,22 +34,18 @@ public class MainHolderActivity extends SherlockFragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_holder_activity);
 
-		//TODO:for debug
-		new OperationExecutor().getPostList(1, 5);
-		new OperationExecutor().register("Igor Filakhtov", "igorfilakhtov@mail.com");
-		
-		//я сам офигел, когда вот так получилось, но создание надо писать так
-		OperationExecutor op = new OperationExecutor();
-		op.createPost(op.new NewPost(User.getInstance().getId(), User.getInstance().getToken(), "yeaaaahhhh", 50.1234, 30.4567));
-		
+		// TODO:for debug
+		// new OperationExecutor().getPostList(1, 5);
+		// new OperationExecutor().register("Igor Filakhtov",
+		// "igorfilakhtov@mail.com");
+
 		PreferencesController.getInstance().init(this);
 		if (!User.getInstance().isLoggedIn()) {
 			startActivity(new Intent(this, LoginActivity.class));
 		}
 
 		FragmentManager fm = getSupportFragmentManager();
-		SocialStreamFragment startFragment = (SocialStreamFragment) fm
-				.findFragmentById(R.id.locationFragment);
+		SocialStreamFragment startFragment = (SocialStreamFragment) fm.findFragmentById(R.id.locationFragment);
 		fragments[0] = startFragment;
 		fragments[1] = (NewMessageFragment) fm.findFragmentById(R.id.shareFragment);
 
@@ -103,13 +95,11 @@ public class MainHolderActivity extends SherlockFragmentActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_light: {
-			startActivity(new Intent(MainHolderActivity.this,
-					LightActivity.class));
+			startActivity(new Intent(MainHolderActivity.this, LightActivity.class));
 			break;
 		}
 		case R.id.action_hymn: {
-			startActivity(new Intent(MainHolderActivity.this,
-					HymnActivity.class));
+			startActivity(new Intent(MainHolderActivity.this, HymnActivity.class));
 			break;
 		}
 		case R.id.action_logout: {
@@ -121,9 +111,7 @@ public class MainHolderActivity extends SherlockFragmentActivity implements
 	}
 
 	private void logout() {
-		plusClient = new PlusClient.Builder(this, this, this)
-				.setVisibleActivities("http://schemas.google.com/AddActivity",
-						"http://schemas.google.com/BuyActivity").build();
+		plusClient = new PlusClient.Builder(this, this, this).setVisibleActivities("http://schemas.google.com/AddActivity", "http://schemas.google.com/BuyActivity").build();
 		plusClient.connect();
 		PreferencesController.getInstance().clear();
 	}
@@ -145,28 +133,28 @@ public class MainHolderActivity extends SherlockFragmentActivity implements
 
 	@Override
 	public void onConnectionFailed(ConnectionResult result) {
-		Toast.makeText(this, " Error code: " + result.getErrorCode(),
-				Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, " Error code: " + result.getErrorCode(), Toast.LENGTH_SHORT).show();
 
 	}
 
 	@Override
 	public void onConnected(Bundle arg0) {
-		plusClient.clearDefaultAccount();
-		plusClient.revokeAccessAndDisconnect(new OnAccessRevokedListener() {
-			@Override
-			public void onAccessRevoked(ConnectionResult status) {
+		if (plusClient.isConnected()) {
+			plusClient.clearDefaultAccount();
+			plusClient.revokeAccessAndDisconnect(new OnAccessRevokedListener() {
+				@Override
+				public void onAccessRevoked(ConnectionResult status) {
 
-			}
-		});
-		plusClient.disconnect();
+				}
+			});
+			plusClient.disconnect();
+		}
 		startActivity(new Intent(MainHolderActivity.this, LoginActivity.class));
 	}
 
 	@Override
 	public void onDisconnected() {
-		Toast.makeText(this, getString(R.string.google_disconnected),
-				Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, getString(R.string.google_disconnected), Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -177,7 +165,7 @@ public class MainHolderActivity extends SherlockFragmentActivity implements
 
 	@Override
 	public void onBackPressed() {
-		if(currentFragment == 0) {
+		if (currentFragment == 0) {
 			finish();
 		} else {
 			showFragment(0, false);

@@ -12,14 +12,13 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.plus.PlusClient;
 import com.primerworldapps.iamonmaydan.entity.User;
-import com.primerworldapps.iamonmaydan.executors.RegisterExecutor;
+import com.primerworldapps.iamonmaydan.executors.OperationExecutor;
 import com.primerworldapps.iamonmaydan.utils.PreferencesController;
 
 public class LoginActivity extends SherlockActivity implements GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener {
 
 	private SignInButton loginButton;
-	private User user;
 	private PlusClient plusClient;
 	
 	public final int REQUEST_CODE_RESOLVE_ERR = 9000;
@@ -29,7 +28,6 @@ public class LoginActivity extends SherlockActivity implements GooglePlayService
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_activity);
 
-		user = User.getInstance();
 		plusClient = new PlusClient.Builder(this, this, this).setVisibleActivities("http://schemas.google.com/AddActivity",
 				"http://schemas.google.com/BuyActivity").build();
 		plusClient.connect();
@@ -66,13 +64,9 @@ public class LoginActivity extends SherlockActivity implements GooglePlayService
 
 	@Override
 	public void onConnected(Bundle arg0) {
-		if (!user.isLoggedIn()) {
-			user.setLoggedIn(true);
-			user.setName(plusClient.getCurrentPerson().getDisplayName());
-			user.setEmail(plusClient.getAccountName());
-
+		if (!User.getInstance().isLoggedIn()) {
 			PreferencesController.getInstance().saveUserInfo();
-			new RegisterExecutor().sendUSerInfo(user);
+			new OperationExecutor().register(plusClient.getCurrentPerson().getDisplayName(), plusClient.getAccountName());
 		}
 		Toast.makeText(this, getString(R.string.google_connected), Toast.LENGTH_SHORT).show();
 	}

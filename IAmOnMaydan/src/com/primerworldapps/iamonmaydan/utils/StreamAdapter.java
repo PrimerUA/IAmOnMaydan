@@ -1,5 +1,8 @@
 package com.primerworldapps.iamonmaydan.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,30 +11,29 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.primerworldapps.iamonmaydan.R;
+import com.primerworldapps.iamonmaydan.entity.Post;
 
 public class StreamAdapter extends BaseAdapter {
 
-	Context context;
-	String[] titles;
-	String[] messages;
+	private List<Post> postsList;
 	private static LayoutInflater inflater = null;
 
-	public StreamAdapter(Context context, String[] titles, String[] messages) {
-		this.context = context;
-		this.titles = titles;
-		this.messages = messages;
-		inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	public StreamAdapter(Context context, List<Post> posts) {
+		this.postsList = (ArrayList<Post>) posts;
+		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
 	@Override
 	public int getCount() {
-		return messages.length;
+		if (postsList != null)
+			return postsList.size();
+		else
+			return 0;
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return messages[position];
+		return postsList.get(position);
 	}
 
 	@Override
@@ -46,9 +48,9 @@ public class StreamAdapter extends BaseAdapter {
 			vi = inflater.inflate(R.layout.stream_row, null);
 		}
 		TextView titleView = (TextView) vi.findViewById(R.id.rowHeader);
-		titleView.setText(titles[position]);
+		titleView.setText(postsList.get(position).getUser());
 		TextView messgageView = (TextView) vi.findViewById(R.id.rowMessage);
-		messgageView.setText(messages[position]);
+		messgageView.setText(postsList.get(position).getText());
 		return vi;
 	}
 
