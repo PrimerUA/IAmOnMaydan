@@ -14,11 +14,14 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.protocol.HTTP;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.primerworldapps.iamonmaydan.entity.Post;
 import com.primerworldapps.iamonmaydan.entity.User;
+import com.primerworldapps.iamonmaydan.utils.PreferencesController;
 
 public class OperationExecutor {
 
@@ -119,6 +122,7 @@ public class OperationExecutor {
 		reader.endObject();
 		reader.close();
 		User.getInstance().setName(name).setEmail(email).setLoggedIn(true);
+		PreferencesController.getInstance().saveUserInfo();
 	}
 
 	private String getPostUrl(HttpResponse response) throws IOException {

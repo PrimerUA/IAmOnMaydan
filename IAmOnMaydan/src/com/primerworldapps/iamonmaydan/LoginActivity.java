@@ -65,7 +65,6 @@ public class LoginActivity extends SherlockActivity implements GooglePlayService
 	@Override
 	public void onConnected(Bundle arg0) {
 		if (!User.getInstance().isLoggedIn()) {
-			PreferencesController.getInstance().saveUserInfo();
 			new OperationExecutor().register(plusClient.getCurrentPerson().getDisplayName(), plusClient.getAccountName());
 		}
 		Toast.makeText(this, getString(R.string.google_connected), Toast.LENGTH_SHORT).show();

@@ -41,6 +41,7 @@ public class SocialStreamFragment extends SherlockFragment {
 	private View view;
 	private ListView streamList;
 	private List<Post> posts;
+	private StreamAdapter streamAdapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +62,7 @@ public class SocialStreamFragment extends SherlockFragment {
 					@Override
 					public void run() {
 						posts = new OperationExecutor().getPostList(0, 10);
-						((StreamAdapter) streamList.getAdapter()).notifyDataSetChanged(); 
+						streamAdapter.notifyDataSetChanged(); 
 					}
 				});
 				myProgressDialog.dismiss();
@@ -82,6 +83,7 @@ public class SocialStreamFragment extends SherlockFragment {
 		streamList = (ListView) view.findViewById(R.id.socialList);
 		
 		streamList.setAdapter(new StreamAdapter(getActivity(), posts));
+		streamAdapter = (StreamAdapter) streamList.getAdapter();
 	}
 
 	protected void updateLocation() {
