@@ -2,6 +2,7 @@ package com.primerworldapps.iamonmaydan.executors;
 
 import java.io.InputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
@@ -10,10 +11,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class AsyncStream extends AsyncTask<String, Integer, InputStream> {
+public class AsyncStream extends AsyncTask<String, Integer, byte[]> {
 
 	@Override
-	protected InputStream doInBackground(String... urls) {
+	protected byte[] doInBackground(String... urls) {
 		HttpGet request = new HttpGet(urls[0]);
 
 		try {
@@ -26,7 +27,7 @@ public class AsyncStream extends AsyncTask<String, Integer, InputStream> {
 				// return null;//check if neccessary
 			}
 
-			return response.getEntity().getContent();
+			return IOUtils.toByteArray(response.getEntity().getContent());
 		} catch (Exception e) {
 			request.abort();
 			Log.w(getClass().getSimpleName(), "Error for URL " + urls[0], e);

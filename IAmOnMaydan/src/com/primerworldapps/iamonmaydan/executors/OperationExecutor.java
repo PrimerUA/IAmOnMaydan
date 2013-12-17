@@ -1,5 +1,6 @@
 package com.primerworldapps.iamonmaydan.executors;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -86,7 +87,8 @@ public class OperationExecutor {
 	private InputStream getStream(String url) {
 		InputStream in = null;
 		try {
-			in = new AsyncStream().execute(url).get();
+			byte[] buff = new AsyncStream().execute(url).get();
+			in = new ByteArrayInputStream(buff);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {

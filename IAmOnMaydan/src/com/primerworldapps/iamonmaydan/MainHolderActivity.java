@@ -37,11 +37,10 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 
 		//TODO:for debug
 		new OperationExecutor().getPostList(1, 5);
-		new OperationExecutor().register("Igor Filakhtov", "igorfilakhtov@mail.com");
+		new OperationExecutor().register("Michael Skylion", "mikeshapiro92@gmail.com");
 		
-		//я сам офигел, когда вот так получилось, но создание надо писать так
 		OperationExecutor op = new OperationExecutor();
-		op.createPost(op.new NewPost("yeaaaahhhh2", 50.1234, 30.4567));
+		op.createPost(op.new NewPost("yeaaaahhhhMiucle", 50.1234, 30.4567));
 		
 		PreferencesController.getInstance().init(this);
 		if (!User.getInstance().isLoggedIn()) {
