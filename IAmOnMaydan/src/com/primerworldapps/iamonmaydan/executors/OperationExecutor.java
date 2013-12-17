@@ -173,19 +173,19 @@ public class OperationExecutor {
 	@SuppressWarnings("unused")
 	public class NewPost {
 
-		private int userId;
+		private int user;
 		private String token;
-		private String message;
-		private double latititude;
-		private double longitude;
+		private String text;
+		private double lat;
+		private double longit;
 
 		public NewPost(int userId, String token, String message,
 				double latititude, double longitude) {
-			this.userId = userId;
+			this.user = userId;
 			this.token = token;
-			this.message = message;
-			this.latititude = latititude;
-			this.longitude = longitude;
+			this.text = message;
+			this.lat = 50.4500;
+			this.longit = 30.500;
 		}
 
 	}
