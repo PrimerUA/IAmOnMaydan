@@ -11,8 +11,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.plus.PlusClient;
-import com.primerworldapps.iamonmaydan.auth.Executor;
 import com.primerworldapps.iamonmaydan.entity.User;
+import com.primerworldapps.iamonmaydan.executors.RegisterExecutor;
 import com.primerworldapps.iamonmaydan.utils.PreferencesController;
 
 public class LoginActivity extends SherlockActivity implements GooglePlayServicesClient.ConnectionCallbacks,
@@ -72,7 +72,7 @@ public class LoginActivity extends SherlockActivity implements GooglePlayService
 			user.setEmail(plusClient.getAccountName());
 
 			PreferencesController.getInstance().saveUserInfo();
-			new Executor().sendUSerInfo(user);
+			new RegisterExecutor().sendUSerInfo(user);
 		}
 		Toast.makeText(this, getString(R.string.google_connected), Toast.LENGTH_SHORT).show();
 	}

@@ -4,51 +4,39 @@ import java.sql.Date;
 
 public class Post {
 
-	private int id;
-	private Date date;
-	private String userName;
-	private String message;
-	private String postUrl;
+	private long date;
+	private String user;
+	private String text;
+	private String url;
 
 	// avatar, likes, photos, location
 
-	public String getUserName() {
-		return userName;
+	public String getUser() {
+		return user;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUser(String userName) {
+		this.user = userName;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getText() {
+		return text;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public String getPostUrl() {
-		return postUrl;
+		return url;
 	}
 
 	public void setPostUrl(String postUrl) {
-		this.postUrl = postUrl;
+		this.url = postUrl;
 	}
 
 	public Date getDate() {
-		return date;
+		return new Date(date * 1000);
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 }

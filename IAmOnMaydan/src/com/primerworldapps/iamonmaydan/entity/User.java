@@ -23,40 +23,45 @@ public class User {
 		return id;
 	}
 
-	public void setId(int id) {
+	public User setId(int id) {
 		this.id = id;
+		return instance;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public User setName(String name) {
 		this.name = name;
+		return instance;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public User setEmail(String email) {
 		this.email = email;
+		return instance;
 	}
 
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
 
-	public void setLoggedIn(boolean loggedIn) {
+	public User setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
+		return instance;
 	}
 
 	public String getToken() {
 		return token;
 	}
 
-	public void setToken(String token) {
+	public User setToken(String token) {
 		this.token = token;
+		return instance;
 	}
 
 }
