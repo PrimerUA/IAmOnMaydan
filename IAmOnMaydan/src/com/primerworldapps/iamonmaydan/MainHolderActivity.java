@@ -44,7 +44,7 @@ public class MainHolderActivity extends SherlockFragmentActivity implements
 		
 		//я сам офигел, когда вот так получилось, но создание надо писать так
 		OperationExecutor op = new OperationExecutor();
-		op.createPost(op.new NewPost(User.getInstance().getId(), User.getInstance().getToken(), "yeaaaahhhh", 50.1234, 30.4567));
+		op.createPost(op.new NewPost(User.getInstance().getId(), User.getInstance().getToken(), "yeaaaahhhh2", 50.1234, 30.4567));
 		
 		PreferencesController.getInstance().init(this);
 		if (!User.getInstance().isLoggedIn()) {

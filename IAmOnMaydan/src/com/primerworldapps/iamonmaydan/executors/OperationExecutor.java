@@ -119,7 +119,7 @@ public class OperationExecutor {
 		}
 		reader.endObject();
 		reader.close();
-		User.getInstance().setName(name).setEmail(email);
+		User.getInstance().setName(name).setEmail(email).setLoggedIn(true);
 		
 	}
 
