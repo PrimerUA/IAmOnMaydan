@@ -116,13 +116,7 @@ public class OperationExecutor {
 		}
 		reader.endObject();
 		reader.close();
-<<<<<<< HEAD
-		User.getInstance().setName(name).setEmail(email);
-
-=======
 		User.getInstance().setName(name).setEmail(email).setLoggedIn(true);
-		
->>>>>>> 7a3d17ab065ee8f21d3d65935591178af4dbb039
 	}
 
 	private String getPostUrl(HttpResponse response) throws IOException {

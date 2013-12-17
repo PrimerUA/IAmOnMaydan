@@ -17,6 +17,7 @@ import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallback
 import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.PlusClient.OnAccessRevokedListener;
 import com.primerworldapps.iamonmaydan.entity.User;
+import com.primerworldapps.iamonmaydan.executors.OperationExecutor;
 import com.primerworldapps.iamonmaydan.fragments.SocialStreamFragment;
 import com.primerworldapps.iamonmaydan.fragments.NewMessageFragment;
 import com.primerworldapps.iamonmaydan.utils.PreferencesController;
@@ -34,22 +35,14 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_holder_activity);
 
-<<<<<<< HEAD
-		// TODO:for debug
-		// new OperationExecutor().getPostList(1, 5);
-		// new OperationExecutor().register("Igor Filakhtov",
-		// "igorfilakhtov@mail.com");
-
-=======
 		//TODO:for debug
 		new OperationExecutor().getPostList(1, 5);
 		new OperationExecutor().register("Igor Filakhtov", "igorfilakhtov@mail.com");
 		
 		//я сам офигел, когда вот так получилось, но создание надо писать так
 		OperationExecutor op = new OperationExecutor();
-		op.createPost(op.new NewPost(User.getInstance().getId(), User.getInstance().getToken(), "yeaaaahhhh2", 50.1234, 30.4567));
+		op.createPost(op.new NewPost("yeaaaahhhh2", 50.1234, 30.4567));
 		
->>>>>>> 7a3d17ab065ee8f21d3d65935591178af4dbb039
 		PreferencesController.getInstance().init(this);
 		if (!User.getInstance().isLoggedIn()) {
 			startActivity(new Intent(this, LoginActivity.class));
