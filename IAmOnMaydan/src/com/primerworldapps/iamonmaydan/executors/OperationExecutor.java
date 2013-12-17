@@ -101,7 +101,6 @@ public class OperationExecutor {
 	private void fillUserDetails(String name, String email,
 			HttpResponse response) throws IllegalStateException, IOException {
 
-		User.getInstance().setName(name).setEmail(email);
 		InputStream in = response.getEntity().getContent();
 		JsonReader reader = new JsonReader(new InputStreamReader(in));
 
@@ -120,7 +119,8 @@ public class OperationExecutor {
 		}
 		reader.endObject();
 		reader.close();
-
+		User.getInstance().setName(name).setEmail(email);
+		
 	}
 
 	private String getPostUrl(HttpResponse response) throws IOException {
