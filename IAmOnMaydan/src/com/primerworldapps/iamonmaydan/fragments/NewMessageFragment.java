@@ -46,7 +46,18 @@ public class NewMessageFragment extends SherlockFragment {
 	}
 
 	private void startSharing() {
-		new OperationExecutor().createPost(new OperationExecutor().new NewPost(messageEdit.getText().toString(), 50.1234, 30.4567));
+		final ProgressDialog myProgressDialog = ProgressDialog.show(getActivity(), getString(R.string.connection), getString(R.string.connection_wait), true);
+		new Thread() {
+			public void run() {
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						new OperationExecutor().createPost(new OperationExecutor().new NewPost(messageEdit.getText().toString(), 50.1234, 30.4567));
+					}
+				});
+				myProgressDialog.dismiss();
+			}
+		}.start();
 
 		// String shareBody = getString(R.string.app_name) + " Повідомляю: ''" +
 		// messageEdit.getText().toString() + "'' " +
