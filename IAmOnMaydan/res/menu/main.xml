@@ -10,7 +10,7 @@
         android:id="@+id/action_refresh"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:icon="@android:drawable/ic_popup_sync"
+        android:icon="@drawable/refresh"
         android:title="@string/action_refresh"/>
     
     <item

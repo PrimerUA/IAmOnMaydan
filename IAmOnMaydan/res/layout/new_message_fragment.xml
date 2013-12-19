@@ -21,6 +21,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
             android:text="@string/onmaydan_text"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
@@ -35,6 +39,11 @@
             android:hint="@string/message_hint"
             android:inputType="textMultiLine"
             android:lines="@integer/i3"
+            android:textColor="@android:color/darker_gray"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
             android:textColorHint="#dddddd" />
 
         <TextView
@@ -43,6 +52,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/tell_text"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
             android:typeface="serif" />
@@ -62,7 +75,6 @@
             android:cropToPadding="false"
             android:scaleType="centerCrop"
             android:src="@drawable/fancy_maydan_button" />
-
     </RelativeLayout>
 
 </LinearLayout>

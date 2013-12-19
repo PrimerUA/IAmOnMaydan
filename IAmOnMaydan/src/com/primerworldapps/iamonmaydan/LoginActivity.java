@@ -1,7 +1,10 @@
 package com.primerworldapps.iamonmaydan;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -13,14 +16,12 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.plus.PlusClient;
 import com.primerworldapps.iamonmaydan.entity.User;
 import com.primerworldapps.iamonmaydan.executors.OperationExecutor;
-import com.primerworldapps.iamonmaydan.utils.PreferencesController;
 
-public class LoginActivity extends SherlockActivity implements GooglePlayServicesClient.ConnectionCallbacks,
-		GooglePlayServicesClient.OnConnectionFailedListener {
+public class LoginActivity extends SherlockActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
 
 	private SignInButton loginButton;
 	private PlusClient plusClient;
-	
+
 	public final int REQUEST_CODE_RESOLVE_ERR = 9000;
 
 	@Override
@@ -28,8 +29,7 @@ public class LoginActivity extends SherlockActivity implements GooglePlayService
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_activity);
 
-		plusClient = new PlusClient.Builder(this, this, this).setVisibleActivities("http://schemas.google.com/AddActivity",
-				"http://schemas.google.com/BuyActivity").build();
+		plusClient = new PlusClient.Builder(this, this, this).setVisibleActivities("http://schemas.google.com/AddActivity", "http://schemas.google.com/BuyActivity").build();
 		plusClient.connect();
 
 		screenInit();
@@ -64,10 +64,19 @@ public class LoginActivity extends SherlockActivity implements GooglePlayService
 
 	@Override
 	public void onConnected(Bundle arg0) {
-		if (!User.getInstance().isLoggedIn()) {
-			new OperationExecutor().register(plusClient.getCurrentPerson().getDisplayName(), plusClient.getAccountName());
+		ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		NetworkInfo mMobile = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+		if (mWifi.isConnected() || mMobile.isConnected()) {
+			if (!User.getInstance().isLoggedIn()) {
+				new OperationExecutor().register(plusClient.getCurrentPerson().getDisplayName(), plusClient.getAccountName());
+			}
+			Toast.makeText(this, getString(R.string.google_connected), Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(this, getString(R.string.get_connected), Toast.LENGTH_SHORT).show();
+			Intent wirelessSettingsIntent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
+			startActivity(wirelessSettingsIntent);
 		}
-		Toast.makeText(this, getString(R.string.google_connected), Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

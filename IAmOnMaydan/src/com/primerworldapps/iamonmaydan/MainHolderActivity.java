@@ -83,7 +83,6 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 		// getSupportActionBar().setTitle(getString(R.string.welcome_maydan));
 		// }
 		currentFragment = fragmentIndex;
-		supportInvalidateOptionsMenu();
 		transaction.commit();
 	}
 
@@ -102,6 +101,13 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 			logout();
 			break;
 		}
+		case R.id.action_refresh: {
+			((SocialStreamFragment) fragments[0]).loadPostsOnScreen();
+			break;
+		} default:
+			currentFragment = 0;
+			supportInvalidateOptionsMenu();
+			showFragment(0, false);
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -116,10 +122,14 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.main, menu);
 		if (currentFragment == 0) {
+			getSupportActionBar().setHomeButtonEnabled(false);
+			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 			menu.findItem(R.id.action_hymn).setVisible(false);
 			menu.findItem(R.id.action_light).setVisible(false);
 			menu.findItem(R.id.action_refresh).setVisible(true);
 		} else {
+			getSupportActionBar().setHomeButtonEnabled(true);
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 			menu.findItem(R.id.action_hymn).setVisible(true);
 			menu.findItem(R.id.action_light).setVisible(true);
 			menu.findItem(R.id.action_refresh).setVisible(false);
@@ -130,7 +140,6 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 	@Override
 	public void onConnectionFailed(ConnectionResult result) {
 		Toast.makeText(this, " Error code: " + result.getErrorCode(), Toast.LENGTH_SHORT).show();
-
 	}
 
 	@Override
@@ -164,6 +173,8 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 		if (currentFragment == 0) {
 			finish();
 		} else {
+			currentFragment = 0;
+			supportInvalidateOptionsMenu();
 			showFragment(0, false);
 		}
 	}

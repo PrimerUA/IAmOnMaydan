@@ -19,10 +19,11 @@
     <string name="message_hint">Зараз на Майданi...</string>
     <string name="share_via">Розповiсти за допомогою:</string>
     <string name="onmaydan_text">Вітаємо на Майдані!\nЩо зараз тут вiдбувається?</string>
-    <string name="tell_text">Натиcніть на кнопку та розкажіть усім! Приєднуйте зображення та геолокаційні дані</string>
+    <string name="tell_text">Натиcніть на кнопку та розкажіть усім!</string>
     <string name="light_on">Ліхтарик увімкнено</string>
     <string name="light_off">Ліхтарик вимкнено</string>
     <string name="light_text">Використовуйте коли співаєте Державний Гімн або для підсвітки</string>
+    <string name="light_title">Ліхтарик</string>
     <string name="hymn_title">Гімн України</string>
     <string name="hymn_lyrics">Ще не вмерла України і слава, і воля,\n
 Ще нам, браття молодії, усміхнеться доля.\n
@@ -45,12 +46,14 @@
     <string name="rate">Оцінити</string>
     <string name="more">Більше</string>
     <string name="welcome_maydan">Вітаємо на Майдані!</string>
-    <string name="location_text">Натисніть кнопку, щоб перевірити Ваше місцезнаходження</string>
+    <string name="location_text">Натисніть кнопку, щоб перевірити Ваше місцезнаходження та додати власну новину з Майдану</string>
     <string name="play">Грати</string>
     <string name="pause">Пауза</string>
     <string name="stop">Зупинити</string>
     <string name="resume">Продовжити</string>
     <string name="connection">Відбувається підключення</string>
     <string name="connection_wait">Будь-ласка, зачекайте</string>
+    <string name="add_more">Завантажити ще...</string>
+    <string name="get_connected">Спочатку підключіться до мережі Інтернет</string>
 
 </resources>

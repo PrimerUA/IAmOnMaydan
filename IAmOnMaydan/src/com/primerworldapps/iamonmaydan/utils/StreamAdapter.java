@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class StreamAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, final View convertView, ViewGroup parent) {
 		View vi = convertView;
 		if (vi == null) {
 			vi = inflater.inflate(R.layout.stream_row, null);
@@ -51,6 +52,17 @@ public class StreamAdapter extends BaseAdapter {
 		titleView.setText(postsList.get(position).getUser());
 		TextView messgageView = (TextView) vi.findViewById(R.id.rowMessage);
 		messgageView.setText(postsList.get(position).getText());
+		TextView dateView = (TextView) vi.findViewById(R.id.rowDate);
+		dateView.setText(postsList.get(position).getDate().toLocaleString());
+		TextView linkView = (TextView) vi.findViewById(R.id.rowLink);
+		linkView.setText(postsList.get(position).getPostUrl());
+		linkView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				UrlVisitor.visitURL(convertView.getContext(), postsList.get(position).getPostUrl());
+			}
+		});
 		return vi;
 	}
 
