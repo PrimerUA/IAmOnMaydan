@@ -22,6 +22,7 @@ public class NewMessageFragment extends SherlockFragment {
 	private EditText messageEdit;
 
 	private View view;
+	private MainHolderActivity mainHolderActivity;
 
 	private String url;
 
@@ -33,6 +34,7 @@ public class NewMessageFragment extends SherlockFragment {
 	}
 
 	private void initFragment() {
+		mainHolderActivity = (MainHolderActivity) getActivity();
 		checkinButton = (ImageView) view.findViewById(R.id.checkinButton);
 		messageEdit = (EditText) view.findViewById(R.id.messageText);
 
@@ -56,8 +58,9 @@ public class NewMessageFragment extends SherlockFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						url = new OperationExecutor().createPost(new OperationExecutor().new NewPost(messageEdit.getText().toString(), 50.1234, 30.4567));
-						String shareBody = "Віщаю з Майдану: ''" + messageEdit.getText().toString() + "''\nДжерело: " + url;
+						url = new OperationExecutor().createPost(new OperationExecutor().new NewPost(messageEdit.getText().toString(),
+								mainHolderActivity.getLocation().getLatitude(), mainHolderActivity.getLocation().getLatitude()));
+						String shareBody = getString(R.string.share_news) + messageEdit.getText().toString() + getString(R.string.share_direct) + " " + url;
 						Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 						sharingIntent.setType("text/plain");
 						sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
@@ -71,9 +74,8 @@ public class NewMessageFragment extends SherlockFragment {
 						getActivity().supportInvalidateOptionsMenu();
 					}
 				});
-				((MainHolderActivity) getActivity()).showFragment(0, false);
+				mainHolderActivity.showFragment(0, false);
 			}
 		}.start();
 	}
-
 }

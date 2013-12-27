@@ -11,6 +11,7 @@
     <string name="action_logout">Вихiд</string>
     <string name="action_hymn">Гімн</string>
     <string name="action_refresh">Оновити</string>
+    <string name="action_info">Про проект</string>
     <string name="login">Ласкаво просимо!</string>
     <string name="google_connected">Вхiд виконано</string>
     <string name="google_disconnected">Вихiд виконано</string>
@@ -55,5 +56,15 @@
     <string name="connection_wait">Будь-ласка, зачекайте</string>
     <string name="add_more">Завантажити ще...</string>
     <string name="get_connected">Спочатку підключіться до мережі Інтернет</string>
+    <string name="share_news">Новина з Майдану: \'\'</string>
+    <string name="share_direct">\'\'\nПряме посилання</string>
+    <string name="welcome_title">Система «Я на Майдані!» створена спеціально, для тих користувачів, які територіально знаходяться на Майдані Незалежності в місті Києві, та прилеглих вулицях, на яких проходять мітинги в підтримку Євроінтеграції, відставку діючого Уряду і перевибори президента України.</string>
+    <string name="welcome_new">Увага! У зв’язку з маштабністю мітингу ми значно розширили зону покриття системи! Відтепер додавати інформацію може кожен, хто знаходиться у центрі Києва, у зоні між станціями метро  Лук’янівська -  Вокзальна -  Арсенальна -  Печерська.</string>
+    <string name="welcome_main">«Збираємо підписи за референдум щодо відставки президента і парламенту!»</string>
+    <string name="start_button">Приэднатися до Майдану!</string>
+    <string name="please_rate">Наведемо лад в країні разом! Оцініть проект</string>
+    <string name="do_rate_it">Оцінити зараз</string>
+    <string name="remind">Пізніше</string>
+    <string name="lazy">Ні, дякую</string>
 
 </resources>

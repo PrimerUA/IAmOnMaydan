@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.primerworldapps.iamonmaydan"
     android:installLocation="preferExternal"
-    android:versionCode="1"
+    android:versionCode="2"
     android:versionName="1.0" >
 
     <uses-sdk
@@ -58,6 +58,16 @@
         </activity>
         <activity
             android:name="com.primerworldapps.iamonmaydan.HymnActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.primerworldapps.iamonmaydan.WelcomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>

@@ -1,6 +1,8 @@
 package com.primerworldapps.iamonmaydan;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,9 +19,9 @@ import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallback
 import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.plus.PlusClient.OnAccessRevokedListener;
 import com.primerworldapps.iamonmaydan.entity.User;
-import com.primerworldapps.iamonmaydan.executors.OperationExecutor;
-import com.primerworldapps.iamonmaydan.fragments.SocialStreamFragment;
 import com.primerworldapps.iamonmaydan.fragments.NewMessageFragment;
+import com.primerworldapps.iamonmaydan.fragments.SocialStreamFragment;
+import com.primerworldapps.iamonmaydan.utils.AppRater;
 import com.primerworldapps.iamonmaydan.utils.PreferencesController;
 
 public class MainHolderActivity extends SherlockFragmentActivity implements ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
@@ -30,12 +32,24 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 	private PlusClient plusClient;
 	private int currentFragment;
 
+	private Location location;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_holder_activity);
 
+		AppRater.app_launched(this);
 		PreferencesController.getInstance().init(this);
+
+		SharedPreferences prefs = getSharedPreferences(getString(R.string.app_name), 0);
+		if (prefs.getBoolean("firstLaunch", true)) {
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.putBoolean("firstLaunch", false);
+			editor.commit();
+			startActivity(new Intent(this, WelcomeActivity.class));
+		}
+
 		if (!User.getInstance().isLoggedIn()) {
 			startActivity(new Intent(this, LoginActivity.class));
 		}
@@ -89,22 +103,22 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.action_light: {
+		case R.id.action_light:
 			startActivity(new Intent(MainHolderActivity.this, LightActivity.class));
 			break;
-		}
-		case R.id.action_hymn: {
+		case R.id.action_hymn:
 			startActivity(new Intent(MainHolderActivity.this, HymnActivity.class));
 			break;
-		}
-		case R.id.action_logout: {
+		case R.id.action_logout:
 			logout();
 			break;
-		}
-		case R.id.action_refresh: {
+		case R.id.action_refresh:
 			((SocialStreamFragment) fragments[0]).loadPostsOnScreen();
 			break;
-		} default:
+		case R.id.action_info:
+			startActivity(new Intent(this, WelcomeActivity.class));
+			break;
+		default:
 			currentFragment = 0;
 			supportInvalidateOptionsMenu();
 			showFragment(0, false);
@@ -127,12 +141,14 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 			menu.findItem(R.id.action_hymn).setVisible(false);
 			menu.findItem(R.id.action_light).setVisible(false);
 			menu.findItem(R.id.action_refresh).setVisible(true);
+			menu.findItem(R.id.action_info).setVisible(true);
 		} else {
 			getSupportActionBar().setHomeButtonEnabled(true);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 			menu.findItem(R.id.action_hymn).setVisible(true);
 			menu.findItem(R.id.action_light).setVisible(true);
 			menu.findItem(R.id.action_refresh).setVisible(false);
+			menu.findItem(R.id.action_info).setVisible(false);
 		}
 		return true;
 	}
@@ -177,6 +193,14 @@ public class MainHolderActivity extends SherlockFragmentActivity implements Conn
 			supportInvalidateOptionsMenu();
 			showFragment(0, false);
 		}
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 }

@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.primerworldapps.iamonmaydan.MainHolderActivity;
 import com.primerworldapps.iamonmaydan.R;
 import com.primerworldapps.iamonmaydan.entity.Post;
@@ -85,7 +86,7 @@ public class SocialStreamFragment extends SherlockFragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				String shareBody = "Новина з Майдану: ''" + posts.get(arg2).getText() + "''\nПряме посилання: " + posts.get(arg2).getPostUrl();
+				String shareBody = getString(R.string.share_news) + posts.get(arg2).getText() + getString(R.string.share_direct) + " " + posts.get(arg2).getPostUrl();
 				Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 				sharingIntent.setType("text/plain");
 				sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
@@ -158,6 +159,7 @@ public class SocialStreamFragment extends SherlockFragment {
 		double currentX = location.getLatitude();
 		double currentY = location.getLongitude();
 		if (currentX < Coordinates.TOP_LEFT_X && currentX > Coordinates.BOTTOM_RIGHT_X && currentY < Coordinates.BOTTOM_RIGHT_Y && currentY > Coordinates.TOP_LEFT_Y) {
+			((MainHolderActivity) getActivity()).setLocation(location);
 			((MainHolderActivity) getActivity()).showFragment(1, true);
 			getActivity().supportInvalidateOptionsMenu();
 		} else {
